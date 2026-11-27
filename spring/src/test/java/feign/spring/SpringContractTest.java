@@ -75,7 +75,7 @@ class SpringContractTest {
             .noContent(HttpMethod.GET, "/health/1")
             .noContent(HttpMethod.GET, "/health/optional")
             .noContent(HttpMethod.GET, "/health/optional?param=value")
-            .noContent(HttpMethod.GET, "/health/optional?param")
+            .noContent(HttpMethod.GET, "/health/optional?param=")
             .noContent(HttpMethod.POST, "/health/withNonRequiredRequestBody")
             .noContent(HttpMethod.POST, "/health/withRequiredRequestBody")
             .noContent(HttpMethod.GET, "/health/1?deep=true")
@@ -159,7 +159,7 @@ class SpringContractTest {
   void optionalEmptyValue() {
     resource.checkWithOptional(Optional.of(""));
 
-    mockClient.verifyOne(HttpMethod.GET, "/health/optional?param");
+    mockClient.verifyOne(HttpMethod.GET, "/health/optional?param=");
   }
 
   @Test
