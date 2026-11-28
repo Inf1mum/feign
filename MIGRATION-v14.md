@@ -563,3 +563,11 @@ Once Feign has parsed an interface, the setters on its `MethodMetadata` throw `I
 #### 4. Built clients no longer share the builder's interceptor lists
 
 `target(...)`/`build()` copies the request and method interceptors. Adding an interceptor to a builder after a client was built no longer affects that client.
+
+---
+
+## Query Parameter Rendering
+
+As of 14.x, an empty-string query parameter value is kept and rendered with an `=` sign, so `@RequestLine("GET /path?name={name}")` called with `""` produces `/path?name=` ([#3719](https://github.com/OpenFeign/feign/pull/3719)). In 13.x the value was dropped and only a bare `/path?name` was sent, which servers that distinguish the two forms will see as a request change.
+
+Still unchanged: a `null` value removes the parameter entirely, and a valueless parameter (`?name` with no `=` in the template) still renders as a bare flag.
